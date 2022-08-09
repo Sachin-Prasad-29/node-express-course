@@ -1,24 +1,36 @@
-const express = require('express')
-const path = require('path') // buit in module
-const app = express()
+// Express middleWare are the function which execute during the request to the server.
+// Each Middleware function  has access to req and res object and when its come to the functionality its sky is the limit
+// Middle ware is every where is the express
+// Middle ware is heart and sole of the express
 
-// here all the css js and logo file get loaded from public folder
-//setup static and middleware
-// app.use is for seting up the middleware
-// static asset are the asset which the server need not need to change it
-// just put those file one folder and our express will take care of those file
-// it will create path and put those recourses whereever they required
-app.use(express.static('./public'))
+const express = require('express')
+const app = express()
+const logger = require('./logger')
+
+// Here req, res, next will get supplied by express when logger is added as middleware
+// when we have a middleware we must must include next
+// here logger is a middleware function
+
+// req => middleware => res
+// This is the manual way of adding the middleware
+//app.get('/', logger, (req, res) => {
+
+//Middleware implementation
+//  Always remmver middle ware order matters therefro always put them in the top
+app.use('/api',logger); // here logger is the callback function
 
 app.get('/', (req, res) => {
-    const loc = path.resolve(__dirname, './navbar-app/index.html')
-    res.status(200).sendFile(loc)
+    res.send('<h1>HOME</h1>')
 })
-
-app.get('*', (req, res) => {
-    res.status(404).send('<h1>Page Not Found</h1>')
+app.get('/about', (req, res) => {
+    res.send('<h1>About</h1>')
 })
-
+app.get('/api/product', (req, res) => {
+    res.send('<h1>Products</h1>')
+})
+app.get('/api/item', (req, res) => {
+    res.send('<h1>Items</h1>')
+})
 app.listen(5000, () => {
-    console.log('Server is Listening at port localhost:5000')
+    console.log('Server is listening at localhost/5000')
 })
