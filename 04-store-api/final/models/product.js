@@ -32,3 +32,7 @@ const productSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model('Product', productSchema)
+
+
+
+name:['moniter','keyboard','mouse','GraphicCard','headphone','ram','motherboard','storage','cpu','speaker']
